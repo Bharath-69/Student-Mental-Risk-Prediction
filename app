@@ -36,9 +36,9 @@ def register_user(username, password):
     try:
         c.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, password))
         conn.commit()
-        st.success("✅ Registration successful! You can now login.")
+        st.success(" Registration successful! You can now login.")
     except sqlite3.IntegrityError:
-        st.error("❌ Username already exists!")
+        st.error(" Username already exists!")
     conn.close()
 
 def check_login(username, password):
@@ -56,7 +56,7 @@ if not st.session_state["logged_in"]:
     tab1, tab2 = st.tabs(["Login", "Register"])
     
     with tab1:
-        st.subheader("🔑 Login")
+        st.subheader(" Login")
         username = st.text_input("Username")
         password = st.text_input("Password", type="password")
         if st.button("Login"):
@@ -64,7 +64,7 @@ if not st.session_state["logged_in"]:
                 st.session_state["logged_in"] = True
                 st.rerun()
             else:
-                st.error("❌ Invalid credentials!")
+                st.error(" Invalid credentials!")
     
     with tab2:
         st.subheader("📝 Register")
@@ -73,19 +73,19 @@ if not st.session_state["logged_in"]:
         if st.button("Register"):
             register_user(new_user, new_pass)
 else:
-    tab1, tab2 = st.tabs(["📂 Bulk Prediction", "🧑‍🎓 Individual Prediction"])
+    tab1, tab2 = st.tabs([" Bulk Prediction", " Individual Prediction"])
     
     with tab1:
-        st.subheader("📊 Bulk Risk Prediction System")
-        uploaded_file = st.file_uploader("📂 Upload CSV Dataset", type=["csv"])
+        st.subheader(" Bulk Risk Prediction System")
+        uploaded_file = st.file_uploader(" Upload CSV Dataset", type=["csv"])
         
         if uploaded_file:
             df = pd.read_csv(uploaded_file)
             required_columns = {'roll_number', 'study_hours', 'engagement_score', 'assignment_completion', 'mental_health_score', 'risk_category'}
             if not required_columns.issubset(df.columns):
-                st.error("❌ Dataset must contain required columns!")
+                st.error(" Dataset must contain required columns!")
             else:
-                st.success("✅ Dataset loaded successfully!")
+                st.success(" Dataset loaded successfully!")
                 st.dataframe(df.head())
                 
                 scaler = StandardScaler()
@@ -124,7 +124,7 @@ else:
                     else:
                         student_data = df[df['roll_number'].astype(str) == selected_roll]
                         if student_data.empty:
-                            st.error("❌ Roll number not found!")
+                            st.error(" Roll number not found!")
                         else:
                             risk_category = student_data['predicted_risk_category'].values[0]
                             st.write(f"Prediction for {selected_roll}: {risk_category}")
@@ -157,7 +157,7 @@ else:
                                 st.write(f"- {point}")
     
     with tab2:
-        st.subheader("🧑‍🎓 Individual Risk Prediction")
+        st.subheader(" Individual Risk Prediction")
         study_hours = st.number_input("Study Hours", min_value=0.0, step=0.5)
         engagement_score = st.number_input("Engagement Score", min_value=0.0, step=0.5)
         assignment_completion = st.number_input("Assignment Completion", min_value=0.0, step=0.5)
@@ -179,22 +179,22 @@ else:
             # Feedback messages
             feedback = {
                 "Low": [
-                    "✅ Keep up the great work! Maintain your study routine.",
-                    "📚 Stay engaged with your coursework.",
-                    "📝 Ensure your assignments are completed on time.",
-                    "💡 Continue practicing self-care for mental well-being."
+                    " Keep up the great work! Maintain your study routine.",
+                    " Stay engaged with your coursework.",
+                    " Ensure your assignments are completed on time.",
+                    " Continue practicing self-care for mental well-being."
                 ],
                 "Medium": [
-                    "🔄 Consider increasing your study hours for improvement.",
-                    "📖 Engage more actively in discussions and study groups.",
-                    "⚠ Pay close attention to assignment deadlines.",
-                    "💬 If you're feeling stressed, talk to a mentor or counselor."
+                    " Consider increasing your study hours for improvement.",
+                    " Engage more actively in discussions and study groups.",
+                    " Pay close attention to assignment deadlines.",
+                    " If you're feeling stressed, talk to a mentor or counselor."
                 ],
                 "High": [
-                    "🚨 Immediate action needed! Prioritize your studies.",
-                    "🆘 Seek support from teachers or academic advisors.",
-                    "📅 Create a structured study plan for better time management.",
-                    "🧘‍♂ Consider mental health resources to manage stress effectively."
+                    " Immediate action needed! Prioritize your studies.",
+                    " Seek support from teachers or academic advisors.",
+                    " Create a structured study plan for better time management.",
+                    " Consider mental health resources to manage stress effectively."
                 ]
             }
 
